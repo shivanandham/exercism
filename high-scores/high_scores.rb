@@ -7,14 +7,18 @@ To get started with TDD, see the `README.md` file in your
 =end
 
 class HighScores
-    def initialize scores
-        @scores = scores
+    attr_reader :scores, :latest, :personal_best
+    def initialize(scores)
+      @scores = scores
+      @latest = scores[-1]
+      @personal_best = scores.max
     end
-
-    def scores
-        @scores
+  
+    def personal_top_three
+      toptree = @scores.sort.reverse.slice(0, 3)
     end
-    def latest
-        @scores.last
+  
+    def latest_is_personal_best?
+      personal_top_three[0] > @scores[-1]? false : true
     end
-end
+  end
